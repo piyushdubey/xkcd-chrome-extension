@@ -1,0 +1,12 @@
+{
+	"manifest_version" : 2,
+
+	"name" : "XKCD Reader",
+	"version" : "1.0",
+	"description" : "XCKD Comic reader for Google Chrome",
+	"permissions" : ["debugger"],
+	"browser_action" : {
+		"default_icon" : "icon.png",
+		"default_popup" : "pop.html"
+	} 
+}
