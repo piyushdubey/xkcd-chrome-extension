@@ -1,4 +1,4 @@
-var comicBookNumber = "1250",
+var comicBookNumber = "614",
 
 var getComic = {
 	
@@ -14,6 +14,7 @@ var getComic = {
 	}
 
 	renderResult : function (responseData) {
-		var img = responseData.
+		var src = responseData.image;
+		return src;
 	}
 }
