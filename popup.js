@@ -10,7 +10,8 @@ var getComic = {
 	requestComic : function () {
 		var req = new XMLHTTPRequest();
 		req.onload = renderResult;
-		req.open("GET", comicURL, true)
+		req.open("GET", comicURL, true);
+		req.
 	}
 
 	renderResult : function (responseData) {
