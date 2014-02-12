@@ -1,35 +1,31 @@
 var comicNumber = '';
 
-var reqListener = function() {
-	console.log(this.responseText);
-};
 //create comic object
 var xkcd = {
 
 	xkcdUrl : "http://xkcd.com/info.0.json",
 
 	getComic : function() {
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function() {
-		  if (xhr.readyState !== 4) {
-        return false;
-    }
-    if (xhr.status !== 200) {
-        alert("Error, status code: " + xhr.status);
-        return false;
-    }
-    document.body.innerHTML += "<pre>" + xhr.responseText + "<\/pre>";
-};
-	}
-	xhr.onload = reqListener;
-	xhr.open('GET', this.xkcdUrl, true);
-	xhr.send(null);
-	console.log("response: "+xhr.responseText)
-	var jsonResponse = {};
+				var xhr = new XMLHttpRequest();
+		
+				xhr.onreadystatechange = function() {
+			  		if (xhr.readyState !== 4) {
+       					return false;
+    				}
+    				if (xhr.status !== 200) {
+		        		alert("Error, status code: " + xhr.status);
+        				return false;
+    				}
+    				document.body.innerHTML += "<pre>" + xhr.responseText + "<\/pre>";
+				};
 
-	jsonResponse = JSON.parse(xhr.responseText);
-	console.log(jsonResponse);
-	renderComic(jsonResponse);
+				xhr.open('GET', this.xkcdUrl, true);
+	
+				xhr.send(null);
+				console.log("response: "+xhr.responseText);
+				var jsonResponse = JSON.parse(xhr.responseText);
+				console.log(jsonResponse);
+				renderComic(jsonResponse);
 	}
 };
 
