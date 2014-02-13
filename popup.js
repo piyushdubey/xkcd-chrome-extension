@@ -22,11 +22,9 @@ var xkcd = {
 
 				xhr.send(null);
 				//console.log("response: "+xhr.responseText);
-				if(xhr.responseText !== "") {
-					var jsonResponse = JSON.parse(xhr.responseText);
-					console.log(jsonResponse);
-					renderComic(jsonResponse);	
-				}
+					
+					console.log("response: " + xhr.responseText + "typeof: "+typeof xhr.responseText);
+					renderComic(xhr.responseText);	
 	}
 };
 
@@ -34,9 +32,9 @@ var xkcd = {
 
 var renderComic = function(res) {
     //res = parsed response object
-    console.log(src);
+    console.log(res);
 	var image = document.createElement("img");
-	image.src = res.src;
+	image.src = res.img;
 	image.alt = res.alt;
 	image.crossOrigin = "Anonymous";
 	document.body.appendChild(image);
