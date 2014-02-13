@@ -38,8 +38,16 @@ var renderComic = function(res) {
 	canvas = document.createElement('canvas'),
 	ctx = canvas.getContext('2d'),
 	src = imageObject["img"],
-	altText = imageObject["alt"];
+	altText = imageObject["alt"],
+	title = imageObject["title"];
 	
+	textDiv = document.createElement('div');
+	textDiv.class = "textClass";
+	textDiv.innerHTML = altText;
+
+	header = document.createElement("h1");
+	header.innerHTML = title;
+
 	image.crossOrigin = "Anonymous";
 
 	image.onload = function() {
@@ -52,12 +60,13 @@ var renderComic = function(res) {
 	};
 	console.log("src: "+src+" alt: "+altText);
 	if ( image.complete || image.complete === undefined ) {
-    	//image.src = "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
     	image.src = src;
-    	image.alt = altText;
+    	image.alt = ('"'+ String(altText) + '"');
     	
 }
 	document.body.appendChild(canvas);
+	document.body.appendChild(header);
+	document.body.appendChild(textDiv);
 };
 
 function createCORSRequest(method, url) {
