@@ -6,26 +6,27 @@ var xkcd = {
 	xkcdUrl : "http://xkcd.com/info.0.json",
 
 	getComic : function() {
-				var xhr = new XMLHttpRequest();
-		
-				xhr.onreadystatechange = function() {
-			  		if (xhr.readyState !== 4) {
-       					return false;
-    				}
-    				if (xhr.status !== 200) {
-		        		alert("Error, status code: " + xhr.status);
-        				return false;
-    				}
-    				document.body.innerHTML += "<pre>" + xhr.responseText + "<\/pre>";
+				var xhr = createCORSRequest('GET', this.xkcdUrl);
+					if (!xhr) {
+  						throw new Error('CORS not supported');
+					}	
+				xhr.onload = function() {
+ 					var responseText = xhr.responseText;
+ 					console.log(responseText);
+ 					// process the response.
 				};
 
-				xhr.open('GET', this.xkcdUrl, true);
-	
+				xhr.onerror = function() {
+  					console.log('There was an error!');				
+				};
+
 				xhr.send(null);
-				console.log("response: "+xhr.responseText);
-				var jsonResponse = JSON.parse(xhr.responseText);
-				console.log(jsonResponse);
-				renderComic(jsonResponse);
+				//console.log("response: "+xhr.responseText);
+				if(xhr.responseText !== "") {
+					var jsonResponse = JSON.parse(xhr.responseText);
+					console.log(jsonResponse);
+					renderComic(jsonResponse);	
+				}
 	}
 };
 
@@ -40,6 +41,30 @@ var renderComic = function(res) {
 	image.crossOrigin = "Anonymous";
 	document.body.appendChild(image);
 };
+
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+
+    // Check if the XMLHttpRequest object has a "withCredentials" property.
+    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+    xhr.open(method, url, true);
+
+  } else if (typeof XDomainRequest != "undefined") {
+
+    // Otherwise, check if XDomainRequest.
+    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+
+  } else {
+
+    // Otherwise, CORS is not supported by the browser.
+    xhr = null;
+
+  }
+  return xhr;
+}
 
 //TODO: load document
 document.addEventListener('DOMContentLoaded', function() {

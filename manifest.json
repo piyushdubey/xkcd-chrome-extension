@@ -4,7 +4,7 @@
 	"name" : "XKCD Reader",
 	"version" : "1.0",
 	"description" : "XKCD Comic reader for Google Chrome",
-	"permissions" : ["debugger", "http://www.xkcd.com/*"],
+	"permissions" : ["debugger", "http://www.xkcd.com/*", "http://*/"],
 	"browser_action" : {
 		"default_icon" : "icon.png",
 		"default_popup" : "popup.html"
