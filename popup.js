@@ -14,6 +14,7 @@ var xkcd = {
  					var responseText = xhr.responseText;
  					console.log(responseText);
  					// process the response.
+ 					renderComic(responseText);	
 				};
 
 				xhr.onerror = function() {
@@ -24,7 +25,6 @@ var xkcd = {
 				//console.log("response: "+xhr.responseText);
 					
 					console.log("response: " + xhr.responseText + "typeof: "+typeof xhr.responseText);
-					renderComic(xhr.responseText);	
 	}
 };
 
@@ -33,11 +33,31 @@ var xkcd = {
 var renderComic = function(res) {
     //res = parsed response object
     console.log(res);
-	var image = document.createElement("img");
-	image.src = res.img;
-	image.alt = res.alt;
+    var imageObject = JSON.parse(res);
+	var image = new Image(),
+	canvas = document.createElement('canvas'),
+	ctx = canvas.getContext('2d'),
+	src = imageObject["img"],
+	altText = imageObject["alt"];
+	
 	image.crossOrigin = "Anonymous";
-	document.body.appendChild(image);
+
+	image.onload = function() {
+		canvas.width = image.width;
+		canvas.height = image.height;
+		ctx.drawImage(image, 0, 0);
+		//loading cached images
+		localStorage.setItem('savedImageData', canvas.toDataURL('image/png'));
+		console.log(localStorage);
+	};
+	console.log("src: "+src+" alt: "+altText);
+	if ( image.complete || image.complete === undefined ) {
+    	//image.src = "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    	image.src = src;
+    	image.alt = altText;
+    	
+}
+	document.body.appendChild(canvas);
 };
 
 function createCORSRequest(method, url) {
